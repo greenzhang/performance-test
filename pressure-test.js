@@ -26,17 +26,17 @@ app.use(orm.express(opts, {
         next();
     }
 }));
-app.listen(8080);
+app.listen(8081);
 
 app.get("/", function (req, res) {
     // req.models is a reference to models used above in define()
-    req.models.person.find({}, function (err, data) {
+    req.models.person.find({id:Math.floor(Math.random() * 99999)}).limit(1).run(function(err,data){
         if (err) {
             res.send(err) ;
         }else{
             res.send(JSON.stringify(data));
         }
-    });
+    })
 });
 app.get("/insert", function (req, res) {
     var create = {
