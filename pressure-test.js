@@ -4,6 +4,7 @@
 var express = require('express');
 var orm = require('orm');
 var app = express();
+
 var opts = {
     host: '115.28.26.220',
     port: '3306',
@@ -30,8 +31,11 @@ app.listen(8080);
 app.get("/", function (req, res) {
     // req.models is a reference to models used above in define()
     req.models.person.find({}, function (err, data) {
-        if (err) throw err;
-        res.send(JSON.stringify(data));
+        if (err) {
+            res.send(err) ;
+        }else{
+            res.send(JSON.stringify(data));
+        }
     });
 });
 app.get("/insert", function (req, res) {
@@ -40,10 +44,15 @@ app.get("/insert", function (req, res) {
         name: "test" + Math.floor(Math.random() * 99999)
     };
     req.models.person.create(create, function (err, results) {
-        if (err) res.send(err) ;
-        res.send('insert ok');
+        if (err) {
+            res.send(err) ;
+        }else{
+            res.send('insert ok');
+        }
     })
 });
+
+
 app.get("/update",function(req,res){
     var update = {
         name: "test" + Math.floor(Math.random() * 99999)
@@ -52,8 +61,11 @@ app.get("/update",function(req,res){
         if (err) res.send(err) ;
         data[0].name = update.name;
         data[0].save(function (err) {
-            if(err)res.send(err) ;
-            res.send('update ok');
+            if(err){
+                res.send(err) ;
+            }else{
+                res.send('update ok');
+            }
         });
     })
 });
