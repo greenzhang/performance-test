@@ -1,0 +1,19 @@
+{
+  "name": "PerformanceTest",
+  "version": "0.0.1",
+  "description": "muma",
+  "main": "test.js",
+  "author": {
+    "name": "zhangjun",
+    "email": "a877512439@gmail.com"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=0.10.x"
+  },
+  "dependencies": {
+    "mysql": "2.1.1",
+    "orm":">=2.0.0-alpha6",
+    "express":"*"
+  }
+}
