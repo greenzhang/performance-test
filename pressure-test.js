@@ -92,14 +92,19 @@ if(cluster.isMaster){
         };
         req.models.person.find({id:Math.floor(Math.random() * 10000)},function(err,data){
             if (err) res.send(err) ;
-            data[0].name = update.name;
-            data[0].save(function (err) {
-                if(err){
-                    res.send(err) ;
-                }else{
-                    res.send('update ok');
-                }
-            });
+            if(typeof data[0].name ==='undefined'){
+                console.log(data[0].id);
+                res.send('update ok');
+            }else{
+                data[0].name = update.name;
+                data[0].save(function (err) {
+                    if(err){
+                        res.send(err) ;
+                    }else{
+                        res.send('update ok');
+                    }
+                });
+            }
         })
     });
     app.get('/mysql',function(req,res){
