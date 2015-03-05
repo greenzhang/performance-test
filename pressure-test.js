@@ -130,7 +130,7 @@ if(cluster.isMaster){
     })
     app.get('/mysqlUpdate',function(req,res){
         var name = "test" + Math.floor(Math.random() * 99999);
-        var sql = "update person set name = '"+name+"' where id = 79099;";
+        var sql = "update person set name = '"+name+"' where id = "+Math.floor(Math.random() * 10000)+";";
         client.query(sql,function(err,result){
             if (err) {
                 res.send(err) ;
