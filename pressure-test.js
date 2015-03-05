@@ -66,26 +66,31 @@ if(cluster.isMaster){
         })
     });
     app.get("/insertTest", function (req, res) {
-        for(var i = 0;i<=99999;i++){
-            var create = {
-                id: i,
-                name: "test" + Math.floor(Math.random() * 99999)
-            };
-            req.models.person.create(create, function (err, results) {
+    var i = 0;
+        function insert(id){
+            if(id>=100000){
+                res.send('insert ok');
+                return;
+            }
+            var name= "test" + Math.floor(Math.random() * 99999);
+            var sql = "insert into person(id,name) values ("+id+",'"+name+"');";
+            client.query(sql,function(err,result){
                 if (err) {
                     res.send(err) ;
                 }else{
-                    res.send('insert ok');
+                    i++;
+                    insert(i);
                 }
             })
         }
+        insert(i);
     });
 
     app.get("/update",function(req,res){
         var update = {
             name: "test" + Math.floor(Math.random() * 99999)
         };
-        req.models.person.find({id:Math.floor(Math.random() * 99999)},function(err,data){
+        req.models.person.find({id:Math.floor(Math.random() * 10000)},function(err,data){
             if (err) res.send(err) ;
             data[0].name = update.name;
             data[0].save(function (err) {
