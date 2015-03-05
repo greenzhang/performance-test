@@ -93,6 +93,30 @@ if(cluster.isMaster){
                 res.send(JSON.stringify(result));
             }
         })
+    });
+    app.get('/mysqlInsert',function(req,res){
+        var name = "test" + Math.floor(Math.random() * 99999);
+        var sql = "insert into person(id,name) values ("+Math.floor(Math.random() * 99999)+",'"+name+"');";
+        console.log(sql);
+        client.query(sql,function(err,result){
+            if (err) {
+                res.send(err) ;
+            }else{
+                res.send('insert ok');
+            }
+        })
+    })
+    app.get('/mysqlUpdate',function(req,res){
+        var name = "test" + Math.floor(Math.random() * 99999);
+        var sql = "update person set name = '"+name+"' where id = 79099;";
+        console.log(sql);
+        client.query(sql,function(err,result){
+            if (err) {
+                res.send(err) ;
+            }else{
+                res.send('update ok');
+            }
+        })
     })
 }
 
